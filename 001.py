@@ -25,7 +25,7 @@ videos = {
     ]    
 }
 st.title(" Ứng dụng giải trí và sức khỏe ")
-tab1, tab2, tab3, tab4 = st.tabs(["MV yêu thích", "Dự đoán giờ đi ngủ", "Đọc báo", "Giá vàng mới nhất"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["MV yêu thích", "Dự đoán giờ đi ngủ", "Đọc báo", "Giá vàng mới nhất", "Tính chỉ số BMI"])
 with tab1:
     st.header(f"Các bài hát {selected_artist}")
     for title, url in videos[selected_artist]:
@@ -85,3 +85,19 @@ with tab4:
             st.write(entry.link)
         else:
             st.warning("Không tìm thấy bản tin giá vàng gần nhất")
+with tab5:
+    st.header("Kiểm tra chỉ số BMI của bạn")
+    can_nang = st.number_input("Nhập cân nặng của bạn (kg): ", min_value=10.0, max_value=200.0, value=60.0, step=0.1)
+    chieu_cao = st.number_input("Nhập chiều cao của bạn (m)", min_value=1.0, max_value=2.5, value=1.7, step=0.01)
+    if st.button(" Tính BMI "):
+        bmi = can_nang / (chieu_cao ** 2)
+        st.success(f"Chỉ số BMI của bạn là: {bmi: .2f}")
+
+        if bmi < 18.5:
+            st.warning("Bạn đang bị thiếu cân vì vậy bạn nên ăn uống đầy đủ và nhiều dinh dưỡng hơn")
+        elif 18.5 <= bmi < 25:
+            st.info("Bạn có cân nặng bình thường. Hãy tiếp tục duy trì lối sống lành mạnh")
+        elif 25 <= bmi < 30:
+            st.warning(" Bạn đang thừa cân. Nên cân đối chế dộ ăn và tập thể dục")
+        else:
+            st.error("Bạn đang béo phì. Nên gặp chuyên gia dinh dưỡng hoặc bác sĩ để được tư vấn")
