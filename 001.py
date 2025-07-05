@@ -74,3 +74,14 @@ with tab3:
         st.subheader(entry.title)
         st.write(entry.published)
         st.write(entry.link)
+with tab4:
+    st.header(" Cập nhật giá vàng từ Vietnamnet ")
+    feed = feedparser.parse("https://vietnamnet.vn/rss/kinh-doanh.rss")
+    gold_news = [entry for entry in feed.entries if "vàng" in entry.title.lower() or "giá vàng" in entry.summary.lower()]
+    if gold_news:
+        for entry in gold_news[:5]:
+            st.subheader(entry.title)
+            st.write(entry.published)
+            st.write(entry.link)
+        else:
+            st.warning("Không tìm thấy bản tin giá vàng gần nhất")
